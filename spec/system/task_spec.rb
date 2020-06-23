@@ -6,7 +6,6 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'タスクを作成した場合' do
       # テストコードを it '~' do end ブロックの中に記載する
       it '作成済みのタスクが表示される' do
-        # テストで使用するためのタスクを作成
         task = FactoryBot.create(:task, task_name: 'task', content: 'test_content')
         visit tasks_path
         expect(page).to have_content 'task'
