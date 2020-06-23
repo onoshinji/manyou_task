@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  task_name: MyString
+  time_limit: 2020-06-23
+  priority: MyString
+
+two:
+  task_name: MyString
+  time_limit: 2020-06-23
+  priority: MyString
