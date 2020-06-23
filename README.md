@@ -11,21 +11,21 @@ Todo管理アプリ　
 - rails version 5.2.4
 - database Postgresql
   - "Users" table 
-    - id
-    - name
+    - id    integer
+    - name  string
   - "tasks" table
-    - id
-    - task_name
-    - time_limit
-    - priority
-    - user_id
+    - id     integer
+    - task_name string
+    - time_limit  date
+    - priority  string
+    - user_id bigint
   - "labels" table
-    - id
-    - status
+    - id  integer
+    - status  string
   - "labelings" table
-    - id
-    - task_id
-    - label_id
+    - id  integer
+    - task_id bigint
+    - label_id  bigint
 
 ## Author
 onoshin
