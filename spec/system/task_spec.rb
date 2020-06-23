@@ -7,9 +7,10 @@ RSpec.describe 'タスク管理機能', type: :system do
       # テストコードを it '~' do end ブロックの中に記載する
       it '作成済みのタスクが表示される' do
         # テストで使用するためのタスクを作成
-        task = FactoryBot.create(:task, task_name: 'task')
+        task = FactoryBot.create(:task, task_name: 'task', content: 'test_content')
         visit tasks_path
         expect(page).to have_content 'task'
+        expect(page).to have_content 'test_content'
       end
     end
   end
@@ -18,17 +19,23 @@ RSpec.describe 'タスク管理機能', type: :system do
       it 'データが保存される' do
         visit new_task_path
         fill_in 'Task name', with: 'yjsn'
-        click_on 'Create Task'
+        fill_in 'Content', with: 'con'
+        click_button 'Create Task'
         expect(page).to have_content 'yjsn'
+        expect(page).to have_content 'con'
       end
     end
   end
   describe 'タスク詳細画面' do
-     context '任意のタスク詳細画面に遷移した場合' do
-       it '該当タスクの内容が表示されたページに遷移する' do
-         visit task_path{params[:id]}
-         expect(current_path).to eq task_path
-       end
-     end
+    context '任意のタスク詳細画面に遷移した場合' do
+      it '該当タスクの内容が表示されたページに遷移する' do
+        @task = FactoryBot.create(:task, task_name: 'show', content: 'show_content')
+        visit task_path(@task.id)
+        expect(page).to have_content 'show'
+        expect(page).to have_content 'show_content'
+        #byebug
+      end
+    end
   end
+
 end
