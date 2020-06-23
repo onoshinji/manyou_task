@@ -16,6 +16,7 @@ Todo管理アプリ　
   - "tasks" table
     - id:integer
     - task_name:string
+    - content:text
     - time_limit:date
     - priority:string
     - user_id:bigint
@@ -28,4 +29,4 @@ Todo管理アプリ　
     - label_id:bigint
 
 ## Author
-onoshin
+2005 onoshin 
