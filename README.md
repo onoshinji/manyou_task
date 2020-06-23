@@ -1,24 +1,12 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
+＃README
+ダイブコード課題
+構成
+* Rubyバージョン
+>>2.6.5
+* rails version
+> 5.2.4
 
 * Configuration
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Database
+Postgresql
