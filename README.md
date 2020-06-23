@@ -1,5 +1,5 @@
 ## Name
-todomanagiment
+todomanagement
 
 ## Overview
 Todo管理アプリ　
