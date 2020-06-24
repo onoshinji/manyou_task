@@ -37,4 +37,16 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
   end
 
+  describe 'タスク一覧画面' do
+  context 'タスクを作成した場合' do
+    it '作成済みのタスクが表示される' do
+      # 省略
+    end
+  end
+  # ここにテスト内容を追加で記載する
+  context '複数のタスクを作成した場合' do
+    it 'タスクが作成日時の降順に並んでいる' do
+      # 省略
+    end
+  end
 end

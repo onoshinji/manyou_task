@@ -1,0 +1,21 @@
+ja:
+  activerecord:
+    models:
+      task: タスク
+      user: ユーザー
+      label: ラベル
+      labeling: ラベリング
+    attributes:
+      task:
+        title: タイトル
+        content: 内容
+        time_limit: 終了期限
+        priority: 優先順位
+      user:
+        title: タイトル
+        name: 名前
+        email: メールアドレス
+        current_password: 現在のパスワード
+        password: パスワード
+        password_confirmation: 確認用パスワード
+        remember_me: ログインを記憶
