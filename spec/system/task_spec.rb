@@ -21,7 +21,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it 'タスクが作成日時の降順に並んでいる' do
         visit tasks_path
         @tasks = Task.pluck(:task_name)
-        
+
         expect(@tasks[0]).to have_content 'デフォルトタイトル２'
         expect(@tasks[1]).to have_content 'デフォルトタイトル１'
       end
@@ -32,7 +32,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     context '必要項目を入力して、createボタンを押した場合' do
       it 'データが保存される' do
         visit new_task_path
-        fill_in 'Task name', with: 'yjsn'
+        fill_in 'タスク', with: 'yjsn'
         fill_in '内容', with: 'con'
         click_button '登録する'
         expect(page).to have_content 'yjsn'
