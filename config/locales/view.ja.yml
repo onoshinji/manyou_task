@@ -12,3 +12,9 @@ ja:
     destroy: 削除
     New Task: タスク登録
     Editing Task: タスク編集
+  link:
+    new: 新規タスク
+    show: 詳細
+    edit: 編集
+    destroy: 削除
+    back: 戻る
