@@ -1,0 +1,20 @@
+ja:
+  view:
+    Tasks: タスク一覧
+    sample: サンプル
+    Task name: タスク
+    Content: 内容
+    Time limit: 終了期限
+    Priority: 優先順位
+    Created_at: 作成時間
+    show: タスク詳細
+    edit: 編集
+    destroy: 削除
+    New Task: タスク登録
+    Editing Task: タスク編集
+  link:
+    new: 新規タスク
+    show: 詳細
+    edit: 編集
+    destroy: 削除
+    back: 戻る

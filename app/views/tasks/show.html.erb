@@ -1,24 +1,24 @@
 <p id="notice"><%= notice %></p>
-
+<h1><%= t('view.show') %></h1>
 <p>
-  <strong>Task name:</strong>
+  <strong><%= t('view.Task name') %>:</strong>
   <%= @task.task_name %>
 </p>
 
 <p>
-  <strong>Content:</strong>
+  <strong><%= t('view.Content') %>:</strong>
   <%= @task.content %>
 </p>
 
 <p>
-  <strong>Time limit:</strong>
+  <strong><%= t('view.Time limit') %>:</strong>
   <%= @task.time_limit %>
 </p>
 
 <p>
-  <strong>Priority:</strong>
+  <strong><%= t('view.Priority') %>:</strong>
   <%= @task.priority %>
 </p>
 
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
+<%= link_to t('link.edit'), edit_task_path(@task) %> |
+<%= link_to t('link.back'), tasks_path %>
