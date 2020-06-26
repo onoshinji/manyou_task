@@ -31,24 +31,37 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '終了期限が早い順でソートを選び、その順番に並んでいる' do
         visit tasks_path
         select '終了期限が早い順', from: 'time_limit_select'
-        @tasks = Task.order(time_limit: :ASC)
+        #日付で順番を確かめるのは、変わってしまうので難しい。よって、ここではタスクネームで判定する
+        @tasks = Task.order(time_limit: :ASC).pluck(:task_name)
+        expect(@tasks[0]).to have_content 'デフォルトタイトルone'
+        expect(@tasks[1]).to have_content 'デフォルトタイトルtwo'
+        expect(@tasks[2]).to have_content 'デフォルトタイトルthree'
       end
       it '終了期限が遅い順でソートを選び、その順番に並んでいる' do
         visit tasks_path
         select '終了期限が遅い順', from: 'time_limit_select'
-        @tasks = Task.order(time_limit: :DESC)
+        @tasks = Task.order(time_limit: :DESC).pluck(:task_name)
+        expect(@tasks[0]).to have_content 'デフォルトタイトルthree'
+        expect(@tasks[1]).to have_content 'デフォルトタイトルtwo'
+        expect(@tasks[2]).to have_content 'デフォルトタイトルone'
       end
     end
     context '複数のタスクを作成し、優先順位でソートした場合' do
       it '優先順位が低い順でソートを選び、その順番に並んでいる' do
         visit tasks_path
         select '低', from: 'priority_select'
-        @tasks = Task.order(priority: :ASC)
+        @tasks = Task.order(priority: :ASC).pluck(:priority)
+        expect(@tasks[0]).to have_content '低'
+        expect(@tasks[1]).to have_content '中'
+        expect(@tasks[2]).to have_content '高'
       end
       it '優先順位が高い順でソートを選び、その順番に並んでいる' do
         visit tasks_path
         select '高', from: 'priority_select'
-        @tasks = Task.order(priority: :DESC)
+        @tasks = Task.order(priority: :DESC).pluck(:priority)
+        expect(@tasks[0]).to have_content '高'
+        expect(@tasks[1]).to have_content '中'
+        expect(@tasks[2]).to have_content '低'
       end
     end
   end

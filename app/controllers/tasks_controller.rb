@@ -25,13 +25,12 @@ class TasksController < ApplicationController
         @tasks = Task.all.order(priority: :ASC)
       end
     end
-
     if params[:task_name_search].present? && params[:status_search].to_i >= 0
-      @tasks = Task.where('task_name LIKE ?', "%#{params[:task_name_search]}%").where(status: params[:status_search])
+      @tasks = Task.task_search(params[:task_name_search]).status_search(params[:status_search])
     elsif params[:task_name_search].present?
-      @tasks = Task.where('task_name LIKE ?', "%#{params[:task_name_search]}%")
+      @tasks = Task.task_search(params[:task_name_search])
     elsif params[:status_search].present?
-      @tasks = Task.where(status: params[:status_search])
+      @tasks = Task.status_search(params[:status_search])
     end
   end
 

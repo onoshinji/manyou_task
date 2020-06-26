@@ -1,6 +1,9 @@
 class Task < ApplicationRecord
   # 下記の記述により、全てのクエリに対して降順で表示される。今回は、処理の早さを考慮してidでソートしてみる。
   # default_scope -> { order(created_at: :desc) }
+  scope :task_search, -> (task_search) { where('task_name LIKE ?',"%#{(task_search)}%")}
+  scope :status_search, -> (status_search) { where(status: status_search)}
+  # scope :task_status_search, -> { task_search.status_search }
   validates :task_name,  presence: true, length: { maximum: 80 }
   validates :content,  presence: true, length: { maximum: 300 }
   validates :time_limit, presence: true
