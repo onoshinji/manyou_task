@@ -39,6 +39,18 @@ RSpec.describe 'タスク管理機能', type: :system do
         @tasks = Task.order(time_limit: :DESC)
       end
     end
+    context '複数のタスクを作成し、優先順位でソートした場合' do
+      it '優先順位が低い順でソートを選び、その順番に並んでいる' do
+        visit tasks_path
+        select '低', from: 'priority_select'
+        @tasks = Task.order(priority: :ASC)
+      end
+      it '優先順位が高い順でソートを選び、その順番に並んでいる' do
+        visit tasks_path
+        select '高', from: 'priority_select'
+        @tasks = Task.order(priority: :DESC)
+      end
+    end
   end
 
   describe 'タスク登録画面' do
