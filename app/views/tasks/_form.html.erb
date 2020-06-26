@@ -28,7 +28,7 @@
 
   <div class="field">
     <%= form.label :priority %>
-    <%= form.text_field :priority %>
+    <%= form.select :priority, Task.priorities.keys, include_blank: true %>
   </div>
 
   <div class="actions">

@@ -7,15 +7,25 @@ class TasksController < ApplicationController
     if params[:sort_time_limit].present?
       if params[:sort_time_limit] == 'hurry'
         @tasks = Task.all.order(time_limit: :ASC)
+
       elsif params[:sort_time_limit] == 'slowly'
         @tasks = Task.all.order(time_limit: :DESC)
       end
     end
     #優先順位でソートするif文
-    # if params[:sort_priority].present?
-    #   if params[:sort_priority] == '高'
-    #     @tasks = Task.all.order(priority: :)
-      #タイトルをあいまい検索するための記述
+    if params[:sort_priority].present?
+      #文字列と数値の違いでif文が動かなかった
+      if params[:sort_priority] == "2"
+        @tasks = Task.all.order(priority: :DESC)
+        # 優先順位が中のものは、必要性がないような気がするので、実装しない。
+        # 優先順位でソートする時は高か、低のはず
+      # elsif params[:sort_priority] == "1"
+      #   @tasks = Task.all.find_by(priority: 1)
+      elsif params[:sort_priority] == "0"
+        @tasks = Task.all.order(priority: :ASC)
+      end
+    end
+      # タイトルをあいまい検索するための記述
     @tasks = @tasks.where('task_name LIKE ?', "%#{params[:search]}%") if params[:search].present?
   end
 

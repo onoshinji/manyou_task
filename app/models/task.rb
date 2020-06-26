@@ -4,4 +4,5 @@ class Task < ApplicationRecord
   validates :task_name,  presence: true, length: { maximum: 80 }
   validates :content,  presence: true, length: { maximum: 300 }
   validates :time_limit, presence: true
+  enum priority: { 低: 0, 中: 1, 高: 2 }
 end

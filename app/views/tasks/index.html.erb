@@ -14,7 +14,7 @@
 <% end %>
 
 <%= form_with model: @task, url: tasks_path, method: :get, local: true do |form| %>
-  <%= form.select :sort_priority, {'高': 'high', '中': 'middle', '低': 'low'},
+  <%= form.select :sort_priority, {'高': 2, '中': 1, '低': 0},
                                   { include_blank: '選択してください'},
                                   { class: 'priority_select' , required: true } %>
   <%= form.submit '優先順位でソートを行う'%>
