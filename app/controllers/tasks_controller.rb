@@ -26,7 +26,9 @@ class TasksController < ApplicationController
       end
     end
       # タイトルをあいまい検索するための記述
-    @tasks = @tasks.where('task_name LIKE ?', "%#{params[:search]}%") if params[:search].present?
+    @tasks = @tasks.where('task_name LIKE ?', "%#{params[:task_name_search]}%") if params[:task_name_search].present?
+      # ステータスを一致検索するための記述
+    @tasks = @tasks.where(status: params[:status_search]) if params[:status_search].present?
   end
 
   def show
@@ -74,6 +76,6 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:task_name, :time_limit, :priority, :content)
+      params.require(:task).permit(:task_name, :time_limit, :priority, :content, :status)
     end
 end

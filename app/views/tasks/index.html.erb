@@ -1,11 +1,18 @@
 <p id="notice"><%= notice %></p>
 
 <h1><%= t('view.Tasks') %></h1>
+<%# タイトルあいまい検索 %>
 <%= form_with url: tasks_path, method: :get, local: true do |form| %>
-  <%= form.text_field :search %>
+  <%= form.text_field :task_name_search %>
   <%= form.submit 'タスク検索', name: nil %>
 <% end %>
-
+<%# ステータス検索 %>
+<%= form_with url: tasks_path, method: :get, local: true do |form| %>
+<%= form.select :status_search, {'未着手': 0, '着手中': 1, '完了': 2},
+                                  { include_blank: '選択してください'},
+                                  { class: 'status_select' , required: true } %>
+  <%= form.submit 'ステータス検索', name: nil %>
+<% end %>
 <%= form_with model: @task, url: tasks_path, method: :get, local: true do |form| %>
   <%= form.select :sort_time_limit, {'終了期限が早い順': 'hurry', '終了期限が遅い順': 'slowly'},
                                     { include_blank: '選択してください'},
@@ -14,7 +21,7 @@
 <% end %>
 
 <%= form_with model: @task, url: tasks_path, method: :get, local: true do |form| %>
-  <%= form.select :sort_priority, {'高': 2, '中': 1, '低': 0},
+  <%= form.select :sort_priority, {'高': 2, '低': 0},
                                   { include_blank: '選択してください'},
                                   { class: 'priority_select' , required: true } %>
   <%= form.submit '優先順位でソートを行う'%>
@@ -26,6 +33,7 @@
       <th><%= t('view.Content') %></th>
       <th><%= t('view.Time limit') %></th>
       <th><%= t('view.Priority') %></th>
+      <th><%= t('view.Status') %></th>
       <th><%= t('view.Created_at') %></th>
       <th colspan="3"></th>
     </tr>
@@ -38,6 +46,7 @@
         <td><%= task.content%></td>
         <td><%= task.time_limit%></td>
         <td><%= task.priority %></td>
+        <td><%= task.status %></td>
         <td><%= task.created_at.to_s(:datetime_jp)%></td>
         <td><%= link_to '詳細', task %></td>
         <td><%= link_to '編集', edit_task_path(task) %></td>
