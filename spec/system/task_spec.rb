@@ -20,8 +20,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     context '複数のタスクを作成した場合' do
       it 'タスクが作成日時の降順に並んでいる' do
         visit tasks_path
-        @tasks = Task.pluck(:task_name)
-
+        @tasks = Task.order(created_at: :DESC).pluck(:task_name)
         expect(@tasks[0]).to have_content 'デフォルトタイトル２'
         expect(@tasks[1]).to have_content 'デフォルトタイトル１'
       end

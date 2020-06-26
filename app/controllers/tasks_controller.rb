@@ -2,7 +2,16 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all
+    @tasks = Task.all.order(created_at: :DESC)
+    if params[:sort_time_limit].present?
+      if params[:sort_time_limit] == 'hurry'
+        @tasks = Task.all.order(time_limit: :ASC)
+      elsif params[:sort_time_limit] == 'slowly'
+        @tasks = Task.all.order(time_limit: :DESC)
+      end
+    end
+      #あいまい検索するための記述
+    @tasks = @tasks.where('task_name LIKE ?', "%#{params[:search]}%") if params[:search].present?
   end
 
   def show
