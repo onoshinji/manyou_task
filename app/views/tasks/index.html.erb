@@ -17,14 +17,14 @@
 <%= form_with model: @task, url: tasks_path, method: :get, local: true do |form| %>
   <%= form.select :sort_time_limit, {'終了期限が早い順': 'hurry', '終了期限が遅い順': 'slowly'},
                                     { include_blank: '選択してください'},
-                                    { class: 'time_limit_select' , required: true } %>
+                                    { id: 'time_limit_select' , required: true } %>
   <%= form.submit '終了期限でソートを行う'%>
 <% end %>
 
 <%= form_with model: @task, url: tasks_path, method: :get, local: true do |form| %>
   <%= form.select :sort_priority, {'高': 2, '低': 0},
                                   { include_blank: '選択してください'},
-                                  { class: 'priority_select' , required: true } %>
+                                  { id: 'priority_select' , required: true } %>
   <%= form.submit '優先順位でソートを行う'%>
 <% end %>
 <table>
