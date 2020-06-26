@@ -5,14 +5,15 @@
 <%= form_with url: tasks_path, method: :get, local: true do |form| %>
   <%= form.text_field :task_name_search %>
   <%= form.submit 'タスク検索', name: nil %>
-<% end %>
 <%# ステータス検索 %>
-<%= form_with url: tasks_path, method: :get, local: true do |form| %>
-<%= form.select :status_search, {'未着手': 0, '着手中': 1, '完了': 2},
-                                  { include_blank: '選択してください'},
+
+  <%= form.select :status_search, {'指定しない': -1, '未着手': 0, '着手中': 1, '完了': 2, },
+                                  { include_blank: '', selected: -1},
                                   { class: 'status_select' , required: true } %>
+  <%# <%= form.hidden_field :search, value = 'true' %>
   <%= form.submit 'ステータス検索', name: nil %>
 <% end %>
+
 <%= form_with model: @task, url: tasks_path, method: :get, local: true do |form| %>
   <%= form.select :sort_time_limit, {'終了期限が早い順': 'hurry', '終了期限が遅い順': 'slowly'},
                                     { include_blank: '選択してください'},

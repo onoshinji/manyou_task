@@ -25,10 +25,14 @@ class TasksController < ApplicationController
         @tasks = Task.all.order(priority: :ASC)
       end
     end
-      # タイトルをあいまい検索するための記述
-    @tasks = @tasks.where('task_name LIKE ?', "%#{params[:task_name_search]}%") if params[:task_name_search].present?
-      # ステータスを一致検索するための記述
-    @tasks = @tasks.where(status: params[:status_search]) if params[:status_search].present?
+
+    if params[:task_name_search].present? && params[:status_search].to_i >= 0
+      @tasks = Task.where('task_name LIKE ?', "%#{params[:task_name_search]}%").where(status: params[:status_search])
+    elsif params[:task_name_search].present?
+      @tasks = Task.where('task_name LIKE ?', "%#{params[:task_name_search]}%")
+    elsif params[:status_search].present?
+      @tasks = Task.where(status: params[:status_search])
+    end
   end
 
   def show
