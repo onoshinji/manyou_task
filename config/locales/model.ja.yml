@@ -11,6 +11,7 @@ ja:
         content: 内容
         time_limit: 終了期限
         priority: 優先順位
+        status: ステータス
       user:
         title: タイトル
         name: 名前
