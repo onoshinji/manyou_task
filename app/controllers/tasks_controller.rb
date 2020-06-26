@@ -3,6 +3,7 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all.order(created_at: :DESC)
+    #終了期限でソートするif文
     if params[:sort_time_limit].present?
       if params[:sort_time_limit] == 'hurry'
         @tasks = Task.all.order(time_limit: :ASC)
@@ -10,7 +11,11 @@ class TasksController < ApplicationController
         @tasks = Task.all.order(time_limit: :DESC)
       end
     end
-      #あいまい検索するための記述
+    #優先順位でソートするif文
+    # if params[:sort_priority].present?
+    #   if params[:sort_priority] == '高'
+    #     @tasks = Task.all.order(priority: :)
+      #タイトルをあいまい検索するための記述
     @tasks = @tasks.where('task_name LIKE ?', "%#{params[:search]}%") if params[:search].present?
   end
 
