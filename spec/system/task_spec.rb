@@ -65,13 +65,13 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'タイトルとステータスのAND検索をした場合' do
       it "タイトルとステータスでAND検索できる" do
         visit tasks_path
-        @task1 = FactoryBot.create(:task, task_name: 'タスク１',status: '未着手',)
-        @task2 = FactoryBot.create(:second_task, task_name: 'タスク2',status: '着手中',)
-        @task3 = FactoryBot.create(:third_task, task_name: 'task3',status: '着手中',)
+        @task = FactoryBot.create(:task, task_name: 'タスク1', status: '未着手')
+        @task = FactoryBot.create(:second_task, task_name: 'task2', status: '着手中')
+        @task = FactoryBot.create(:third_task, task_name: 'タスク3', status: '着手中')
         fill_in 'task_name_search', with: 'タスク'
         select '着手中', from: 'status_search'
         click_button 'ステータス検索'
-        expect(page).to have_content 'タスク2'
+        expect(page).to have_content 'タスク3'
       end
     end
     context '複数のタスクを作成し、終了期限でソートした場合' do
