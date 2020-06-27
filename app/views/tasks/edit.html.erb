@@ -1,6 +1,5 @@
 <h1><%= t('view.Editing Task') %></h1>
 
 <%= render 'form', task: @task %>
-
-<%= link_to t('link.show'), @task %> |
-<%= link_to t('link.back'), tasks_path %>
+<button type="button" class = "btn btn-priority"><%= link_to t('link.show'), @task %> </button>
+<button type="button" class = "btn btn-priority"><%= link_to t('link.back'), tasks_path %></button>

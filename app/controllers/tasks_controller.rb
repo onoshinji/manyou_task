@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all.order(created_at: :DESC)
-    @paginatable_array = Kaminari.paginate_array(@tasks).page(params[:page]).per(12)
+    @paginatable_array = Kaminari.paginate_array(@tasks).page(params[:page]).per(8)
     #終了期限でソートするif文
     if params[:sort_time_limit].present?
       if params[:sort_time_limit] == 'hurry'
