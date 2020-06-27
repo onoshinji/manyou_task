@@ -6,6 +6,7 @@ ja:
     Content: 内容
     Time limit: 終了期限
     Priority: 優先順位
+    Status: ステータス
     Created_at: 作成時間
     show: タスク詳細
     edit: 編集

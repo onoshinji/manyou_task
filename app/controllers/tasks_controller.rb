@@ -2,7 +2,37 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all
+    @tasks = Task.all.order(created_at: :DESC)
+    @paginatable_array = Kaminari.paginate_array(@tasks).page(params[:page]).per(8)
+    #終了期限でソートするif文
+    if params[:sort_time_limit].present?
+      if params[:sort_time_limit] == 'hurry'
+        @tasks = Task.all.order(time_limit: :ASC)
+
+      elsif params[:sort_time_limit] == 'slowly'
+        @tasks = Task.all.order(time_limit: :DESC)
+      end
+    end
+    #優先順位でソートするif文
+    if params[:sort_priority].present?
+      #文字列と数値の違いでif文が動かなかったのでこれからも注意
+      if params[:sort_priority] == "2"
+        @tasks = Task.all.order(priority: :DESC)
+        # 優先順位が中のものは、必要性がないような気がするので、実装しない。
+        # 優先順位でソートする時は高か、低のはず
+      # elsif params[:sort_priority] == "1"
+      #   @tasks = Task.all.find_by(priority: 1)
+      elsif params[:sort_priority] == "0"
+        @tasks = Task.all.order(priority: :ASC)
+      end
+    end
+    if params[:task_name_search].present? && params[:status_search].to_i >= 0
+      @tasks = Task.task_search(params[:task_name_search]).status_search(params[:status_search])
+    elsif params[:task_name_search].present?
+      @tasks = Task.task_search(params[:task_name_search])
+    elsif params[:status_search].present?
+      @tasks = Task.status_search(params[:status_search])
+    end
   end
 
   def show
@@ -50,6 +80,6 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:task_name, :time_limit, :priority, :content)
+      params.require(:task).permit(:task_name, :time_limit, :priority, :content, :status)
     end
 end

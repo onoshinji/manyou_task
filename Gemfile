@@ -17,7 +17,11 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
+  gem 'kaminari'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry-rails'
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'rspec-rails', '~> 4.0.0'
   gem 'factory_bot_rails'
   gem 'spring'

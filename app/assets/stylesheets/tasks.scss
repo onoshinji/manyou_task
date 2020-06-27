@@ -1,0 +1,48 @@
+
+html {
+  position:relative;
+  min-height: 100%;
+}
+body{
+  background-color: rgb(40, 47, 139,);
+  opacity: 0.95;
+  background-size: cover;
+  mix-blend-mode: hard-light;
+}
+tbody{
+  width: 100%;
+  font-size: 1.5rem;
+}
+.header_text{
+  font-size: 2rem;
+  color: #2e82b1;
+}
+#error_explanation{
+  text-align: center;
+  font-size: 1.5rem;
+}
+#task_color{
+  background-color: #ffc993;
+}
+#content_color{
+  background-color: #ffff93;
+}
+#time_limit_color{
+  background-color: #c9ff93;
+}
+#priority_color{
+  background-color: #93ff93;
+}
+#status_color{
+  background-color: #93ffff;
+}
+#th_color{
+  text-align: center;
+  background-color: red;
+}
+#show_text{
+  font-size: 2.5rem;
+}
+.field{
+  font-size: 2.5rem;
+}
