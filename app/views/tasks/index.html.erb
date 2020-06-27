@@ -10,19 +10,16 @@
   <%= form.select :status_search, {'指定しない': -1, '未着手': 0, '着手中': 1, '完了': 2, },
                                   { include_blank: '', selected: -1},
                                   { class: 'status_select' , required: true } %>
-  <%# <%= form.hidden_field :search, value = 'true' %>
   <%= form.submit 'ステータス検索', name: nil %>
-<%# <% end %> %>
-
-<%# <%= form_with model: @task, url: tasks_path, method: :get, local: true do |form| %> %>
+<% end %>
+<%# ソートのフォームウィズ %>
+<%= form_with model: @task, url: tasks_path, method: :get, local: true do |form| %>
   <%= form.select :sort_time_limit, {'早いか遅いかで選んでください': -1,'終了期限が早い順': 'hurry', '終了期限が遅い順': 'slowly'},
                                     { include_blank: '', selected: -1},
                                     { id: 'time_limit_select' , required: true } %>
   <%= form.submit '終了期限でソートを行う'%>
-<%# <% end %> %>
 
-<%# <%= form_with model: @task, url: tasks_path, method: :get, local: true do |form| %> %>
-  <%= form.select :sort_priority, {'高か低で選んでください': -1,'高': 2, '低': 0},
+  <%= form.select :sort_priority, {'高いか低いで選んでください': -1,'高': 2, '低': 0},
                                   { include_blank: '', selected: -1},
                                   { id: 'priority_select' , required: true } %>
   <%= form.submit '優先順位でソートを行う'%>
@@ -56,7 +53,7 @@
     <% end %>
   </tbody>
 </table>
-  <%# <%= paginate @tasks %>
+  <%= paginate @tasks %>
 
 <br>
 

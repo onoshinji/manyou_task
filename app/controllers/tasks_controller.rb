@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all.page(params[:page]).per(8).order(created_at: :DESC)
+    @tasks = Task.all.page(params[:page]).per(9).order(created_at: :DESC)
     #終了期限でソートするif文
     if params[:sort_time_limit].present?
       if params[:sort_time_limit] == 'hurry'
@@ -14,7 +14,7 @@ class TasksController < ApplicationController
     end
     #優先順位でソートするif文
     if params[:sort_priority].present?
-      #文字列と数値の違いでif文が動かなかった
+      #文字列と数値の違いでif文が動かなかったのでこれからも注意
       if params[:sort_priority] == "2"
         @tasks = Task.all.order(priority: :DESC)
         # 優先順位が中のものは、必要性がないような気がするので、実装しない。

@@ -9,6 +9,22 @@ RSpec.describe 'タスク管理機能', type: :system do
     FactoryBot.create(:second_task)
     FactoryBot.create(:third_task)
   end
+  describe 'タスク登録画面' do
+    context '必要項目を入力して、createボタンを押した場合' do
+      it 'データが保存される' do
+        visit new_task_path
+        fill_in 'タスク', with: 'yjsn'
+        fill_in '内容', with: 'con'
+        select '低', from: '優先順位'
+        select '未着手', from: 'ステータス'
+        click_button '登録する'
+        expect(page).to have_content 'yjsn'
+        expect(page).to have_content 'con'
+        expect(page).to have_content '低'
+        expect(page).to have_content '未着手'
+      end
+    end
+  end
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
       # テストコードを it '~' do end ブロックの中に記載する
@@ -25,6 +41,37 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(@tasks[0]).to have_content 'デフォルトタイトルthree'
         expect(@tasks[1]).to have_content 'デフォルトタイトルtwo'
 
+      end
+    end
+    context 'タスク検索をした場合' do
+      it "タイトルで検索できる" do
+        visit tasks_path
+        @task = FactoryBot.create(:task, task_name: 'タスクあいまい検索')
+        fill_in 'task_name_search', with: 'タスク'
+        click_button 'タスク検索'
+        expect(@task.task_name).to have_content 'タスクあいまい検索'
+
+      end
+    end
+    context 'ステータス検索をした場合' do
+      it "ステータスで検索できる" do
+        visit tasks_path
+        @task = FactoryBot.create(:task, status: '未着手')
+        select '未着手', from: 'status_search'
+        click_button 'ステータス検索'
+        expect(@task.status).to have_content '未着手'
+      end
+    end
+    context 'タイトルとステータスのAND検索をした場合' do
+      it "タイトルとステータスでAND検索できる" do
+        visit tasks_path
+        @task1 = FactoryBot.create(:task, task_name: 'タスク１',status: '未着手',)
+        @task2 = FactoryBot.create(:second_task, task_name: 'タスク2',status: '着手中',)
+        @task3 = FactoryBot.create(:third_task, task_name: 'task3',status: '着手中',)
+        fill_in 'task_name_search', with: 'タスク'
+        select '着手中', from: 'status_search'
+        click_button 'ステータス検索'
+        expect(page).to have_content 'タスク2'
       end
     end
     context '複数のタスクを作成し、終了期限でソートした場合' do
@@ -62,19 +109,6 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(@tasks[0]).to have_content '高'
         expect(@tasks[1]).to have_content '中'
         expect(@tasks[2]).to have_content '低'
-      end
-    end
-  end
-
-  describe 'タスク登録画面' do
-    context '必要項目を入力して、createボタンを押した場合' do
-      it 'データが保存される' do
-        visit new_task_path
-        fill_in 'タスク', with: 'yjsn'
-        fill_in '内容', with: 'con'
-        click_button '登録する'
-        expect(page).to have_content 'yjsn'
-        expect(page).to have_content 'con'
       end
     end
   end
