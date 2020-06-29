@@ -3,9 +3,11 @@ html {
   position:relative;
   min-height: 100%;
 }
+header{
+  background-color: #93ffff;
+}
 body{
-  background-color: rgb(40, 47, 139,);
-  opacity: 0.95;
+  background-color: #463f3e;
   background-size: cover;
   mix-blend-mode: hard-light;
 }

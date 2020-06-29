@@ -1,5 +1,7 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user
+  before_action :set_task, only: [:show,:edit,:update,:destroy]
+  before_action :ensure_correct_user, only:[:edit,:destroy]
 
   def index
     @tasks = Task.all.order(created_at: :DESC)
@@ -20,8 +22,8 @@ class TasksController < ApplicationController
         @tasks = Task.all.order(priority: :DESC)
         # 優先順位が中のものは、必要性がないような気がするので、実装しない。
         # 優先順位でソートする時は高か、低のはず
-      # elsif params[:sort_priority] == "1"
-      #   @tasks = Task.all.find_by(priority: 1)
+        # elsif params[:sort_priority] == "1"
+        #   @tasks = Task.all.find_by(priority: 1)
       elsif params[:sort_priority] == "0"
         @tasks = Task.all.order(priority: :ASC)
       end
@@ -75,11 +77,24 @@ class TasksController < ApplicationController
   end
 
   private
-    def set_task
-      @task = Task.find(params[:id])
-    end
+  def set_task
+    @task = Task.find(params[:id])
+  end
 
-    def task_params
-      params.require(:task).permit(:task_name, :time_limit, :priority, :content, :status)
+  def task_params
+    params.require(:task).permit(:task_name, :time_limit, :priority, :content, :status)
+  end
+  # 認証済みユーザーかどうか判断するメソッド
+  def authenticate_user
+    unless logged_in?
+      redirect_to new_session_path
     end
+  end
+
+  def ensure_correct_user
+    # 現在ログインしているユーザーと投稿者が合っていなければ
+    unless current_user.id == @task.user_id #IDと比較する。ユーザーIDと比較する
+      redirect_to tasks_path, notice: "あなたが投稿したもの以外は編集、削除できません。"
+    end
+  end
 end
