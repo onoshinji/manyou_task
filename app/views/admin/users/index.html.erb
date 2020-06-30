@@ -1,14 +1,30 @@
+<p id ="notice"><%= notice %></p>
+<h1>管理者用ユーザーページ</h1>
+<button type="button" class = "btn btn-priority"><%= link_to '管理者新規登録画面',new_admin_user_path %></button>
+
 <%= @users.each do |user| %>
 <table>
-  <thead>
+  <thead id= "status_color">
     <tr>
-      <th><%= user.id  %></th>
-      <th><%= user.name %></th>
-      <th>タスクの数<%= user.tasks.count %></th>
+      <th> ユーザーid </th>
+      <th> ユーザーネーム </th>
+      <th> 管理者権限 </th>
+      <th> ユーザーのタスク数 </th>
     </tr>
   </thead>
-  <tr>
-    <td><button type="button" class = "btn btn-priority"><%= link_to '詳細',user %></button></td>
-  </tr>
-  </table>
-<% end %>
+  <tbody>
+    <tr id="content_color">
+      <td><%= user.id  %></td>
+      <td><%= user.name %></td>
+      <td><%= user.admin %></td>
+      <td>タスクの数<%= user.tasks.count %></td>
+      <td><button type="button" class = "btn btn-priority">
+        <%= link_to '詳細',admin_user_path(user.id) %></button></td>
+        <td><button type="button" class = "btn btn-priority">
+          <%= link_to 'ユーザー設定',edit_admin_user_path(user.id) %></button></td>
+          <td><button type="button" class = "btn btn-danger">
+            <%= link_to '削除',admin_user_path(user.id), method: :delete, data: { confirm: '削除していいですか?' } %></button></td>
+          </tr>
+        </tbody>
+      </table>
+      <% end %>

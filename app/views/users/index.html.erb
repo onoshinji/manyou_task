@@ -1,3 +1,4 @@
+<p id ="notice"><%= notice %></p>
 <%= @users.each do |user| %>
 <table>
   <thead>
@@ -10,4 +11,5 @@
     <td><button type="button" class = "btn btn-priority"><%= link_to '詳細',user %></button></td>
   </tr>
   </table>
+
 <% end %>

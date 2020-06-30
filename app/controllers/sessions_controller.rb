@@ -3,14 +3,18 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:session][:email].downcase)
+    @user = User.find_by(email: params[:session][:email].downcase)
     # ここでユーザーの認証を行う。ユーザーが存在し、かつパラムスセッションのパスワードを引数にとりauthenticateメソッドを実行する
-    if user && user.authenticate(params[:session][:password])
+    if @user && @user.authenticate(params[:session][:password])
       # ブラウザのcookieにハッシュ化したユーザーidを保存
-      session[:user_id] = user.id
+      session[:user_id] = @user.id
       # 個人ユーザーページにリダイレクトする
       # user_pathで引数としてユーザのIDを持たせる
-      redirect_to user_path(user.id)
+      if @user.admin?
+        redirect_to admin_users_path, notice: "管理者ページにログインしました"
+      else
+        redirect_to user_path(@user.id), notice: "ユーザー情報を登録しました"
+      end
     else
       flash.now[:danger] = 'ログインに失敗しました'
       render :new

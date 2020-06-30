@@ -3,17 +3,27 @@ class UsersController < ApplicationController
     @users = User.all
   end
   def new
-    redirect_to tasks_path, notice: "ログインしている人はユーザー作成できません" if logged_in?
+    #管理者だったばあい
+    if current_user.admin?
+      @user = User.new
+      #ログインしていた一般ユーザーだった場合
+    elsif logged_in?
+      redirect_to tasks_path, notice: "ログインしている人はユーザー作成できません"
+    end
     @user = User.new
   end
   def create
     @user = User.new(user_params)
     if @user.save
-        # ブラウザのcookieにハッシュ化したユーザーidを保存
+        ブラウザのcookieにハッシュ化したユーザーidを保存
+      if current_user.admin?
+        redirect_to admin_users_path
+      else
         session[:user_id] = @user.id
-      redirect_to user_path(@user.id), notice: "ユーザー情報を登録しました"
+        redirect_to user_path(@user.id), notice: "ユーザー情報を登録しました"
+      end
     else
-      render :new
+      render :new, notice: "ユーザー登録に失敗したよ"
     end
   end
 

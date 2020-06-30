@@ -1,7 +1,7 @@
 <h1>管理者用ページユーザー作成ページ</h1>
-
+<p id ="notice"><%= notice %></p>
 <div class = "text-center">
-<%= form_with model: @user, url: new_user_path, method: :get, local: true do |f| %>
+<%= form_with model: @user, url: admin_users_path,  local: true do |f| %>
   <br>
   <%= f.label :name %>
   <%= f.text_field :name %>
@@ -14,6 +14,8 @@
   <br>
   <%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation %>
+  <br>
+  <%= f.select :admin, User.admins.keys, include_blank: true %>
   <br>
   <button type="button" class = "btn btn-priority">
   <%= f.submit "アカウントを作成する" %>
