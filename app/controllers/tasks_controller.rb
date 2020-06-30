@@ -2,30 +2,27 @@ class TasksController < ApplicationController
   before_action :authenticate_user
   before_action :set_task, only: [:show,:edit,:update,:destroy]
   before_action :ensure_correct_user, only:[:edit,:destroy]
-
+  before_action :current_user_task, only:[:index]
   def index
-    @tasks = Task.all.order(created_at: :DESC)
+    # current_userメソッドで、@current_userにログインしているユーザーのデータを渡している
+    current_user
     @paginatable_array = Kaminari.paginate_array(@tasks).page(params[:page]).per(8)
     #終了期限でソートするif文
     if params[:sort_time_limit].present?
       if params[:sort_time_limit] == 'hurry'
-        @tasks = Task.all.order(time_limit: :ASC)
+        @tasks = @current_user.tasks.order(time_limit: :ASC)
 
       elsif params[:sort_time_limit] == 'slowly'
-        @tasks = Task.all.order(time_limit: :DESC)
+        @tasks = @current_user.tasks.order(time_limit: :DESC)
       end
     end
     #優先順位でソートするif文
     if params[:sort_priority].present?
       #文字列と数値の違いでif文が動かなかったのでこれからも注意
       if params[:sort_priority] == "2"
-        @tasks = Task.all.order(priority: :DESC)
-        # 優先順位が中のものは、必要性がないような気がするので、実装しない。
-        # 優先順位でソートする時は高か、低のはず
-        # elsif params[:sort_priority] == "1"
-        #   @tasks = Task.all.find_by(priority: 1)
+        @tasks = @current_user.tasks.order(priority: :DESC)
       elsif params[:sort_priority] == "0"
-        @tasks = Task.all.order(priority: :ASC)
+        @tasks = @current_user.tasks.order(priority: :ASC)
       end
     end
     if params[:task_name_search].present? && params[:status_search].to_i >= 0
@@ -48,35 +45,32 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
 
-    respond_to do |format|
-      if @task.save
-        format.html { redirect_to @task, notice: '新規タスクが追加されました' }
-      else
-        format.html { render :new }
-      end
+    if @task.save
+      redirect_to tasks_path, notice: '新規タスクが追加されました'
+    else
+      render :new
     end
   end
 
   def update
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to @task, notice: 'タスク内容を編集しました' }
-      else
-        format.html { render :edit }
-      end
+    if @task.update(task_params)
+      redirect_to tasks_path, notice: 'タスク内容を編集しました'
+    else
+      render :edit
     end
   end
 
   def destroy
     @task.destroy
-    respond_to do |format|
-      format.html { redirect_to tasks_url, notice: 'タスクを削除しました' }
-    end
+    redirect_to tasks_path, notice: 'タスクを削除しました'
   end
 
   private
+  def current_user_task
+    @tasks = @current_user.tasks.order(created_at: :DESC)
+  end
   def set_task
     @task = Task.find(params[:id])
   end

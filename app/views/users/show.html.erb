@@ -2,7 +2,7 @@
 <h4><%= @user.name %>さん</h4>
 <p>メールアドレス: <%= @user.email %></p>
 <%= @user.tasks.each do |task| %>
-<tr>
+  <tr>
   <td id="user_tr_color">タイトル:<%= task.task_name %></td>
   <br>
   <td>投稿内容:<%= task.content %></td>
@@ -11,13 +11,11 @@
     <td><%= link_to "投稿を編集する", edit_task_path(task.id) %></td>
     <td><%= link_to '投稿を削除する', task_path(task.id), method: :delete %></td>
     <td><%= link_to '新しく投稿する', new_task_path %> <td>
-      <td><%= link_to 'みんなの投稿', tasks_path %> </td>
-    </div>
+    <td><%= link_to 'みんなの投稿', tasks_path %> </td>
+  </div>
   </tr>
-  <% end %>
-  <br>
-
+<% end %>
   <div id ="footer_top">
     <%= link_to "投稿一覧画面にもどる", tasks_path %>
-    <%# <%= link_to "ユーザー情報を編集する", edit_user_path(@user.id) %> %>
+    <%# <%= link_to "ユーザー情報を編集する", edit_user_path(@user.id) %>
   </div>
