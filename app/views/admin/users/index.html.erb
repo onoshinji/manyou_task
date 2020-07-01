@@ -2,7 +2,7 @@
 <h1>管理者用ユーザーページ</h1>
 <button type="button" class = "btn btn-priority"><%= link_to '管理者新規登録画面',new_admin_user_path %></button>
 
-<%= @users.each do |user| %>
+<% @users.each do |user| %>
 <table>
   <thead id= "status_color">
     <tr>
