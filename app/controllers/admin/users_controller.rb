@@ -22,7 +22,7 @@ class Admin::UsersController < ApplicationController
   end
   def update
     if @user.update(user_params)
-      redirect_to user_path(@user.id), notice: "ユーザーデータを更新しました"
+      redirect_to admin_users_path(@user.id), notice: "ユーザーデータを更新しました"
     else
       render :edit
     end

@@ -15,7 +15,10 @@
   <%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation %>
   <br>
+  <%= f.label :管理者権限 %>
+  <div id="admin">
   <%= f.select :admin, User.admins.keys, include_blank: true %>
+  </div>
   <br>
   <button type="button" class = "btn btn-priority">
   <%= f.submit "アカウントを作成する" %>

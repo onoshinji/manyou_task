@@ -18,5 +18,14 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
   config.include FactoryBot::Syntax::Methods
-
+  
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :truncation
+  end
+  config.before(:all) do
+    DatabaseCleaner.start
+  end
+  config.after(:all) do
+    DatabaseCleaner.clean
+  end
 end

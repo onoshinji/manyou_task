@@ -1,10 +1,14 @@
 require 'rails_helper'
+
 # describe にはテスト対象、context にはテスト時の条件、it には何を確認するかを記載します。
 RSpec.describe 'タスク管理機能', type: :system do
   #describe,contextはプログラムコードというよりも文章での説明
   # background doはcacybaraでサポートされているはずだがなぜかうまくいかなかったので、before do にしている。やっていることは同じ
   before do
   # あらかじめタスク一覧のテストで使用するためのタスクを作成する
+  FactoryBot.create(:user1)
+  FactoryBot.create(:user2)
+  FactoryBot.create(:admin_user)
     FactoryBot.create(:task)
     FactoryBot.create(:second_task)
     FactoryBot.create(:third_task)

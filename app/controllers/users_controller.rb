@@ -3,11 +3,8 @@ class UsersController < ApplicationController
     @users = User.all
   end
   def new
-    #管理者だったばあい
-    if current_user.admin?
-      @user = User.new
       #ログインしていた一般ユーザーだった場合
-    elsif logged_in?
+    if logged_in?
       redirect_to tasks_path, notice: "ログインしている人はユーザー作成できません"
     end
     @user = User.new
@@ -15,8 +12,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-        ブラウザのcookieにハッシュ化したユーザーidを保存
-      if current_user.admin?
+        # ブラウザのcookieにハッシュ化したユーザーidを保存
+      if @user.admin == "管理者"
         redirect_to admin_users_path
       else
         session[:user_id] = @user.id

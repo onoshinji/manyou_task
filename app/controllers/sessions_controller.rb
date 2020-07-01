@@ -10,10 +10,10 @@ class SessionsController < ApplicationController
       session[:user_id] = @user.id
       # 個人ユーザーページにリダイレクトする
       # user_pathで引数としてユーザのIDを持たせる
-      if @user.admin?
+      if @user.admin == '管理者'
         redirect_to admin_users_path, notice: "管理者ページにログインしました"
       else
-        redirect_to user_path(@user.id), notice: "ユーザー情報を登録しました"
+        redirect_to user_path(@user.id), notice: "ログインしました"
       end
     else
       flash.now[:danger] = 'ログインに失敗しました'
