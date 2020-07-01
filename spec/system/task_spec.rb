@@ -5,11 +5,23 @@ RSpec.describe 'タスク管理機能', type: :system do
   # background doはcacybaraでサポートされているはずだがなぜかうまくいかなかったので、before do にしている。やっていることは同じ
   before do
   # あらかじめタスク一覧のテストで使用するためのタスクを作成する
-    FactoryBot.create(:task)
-    FactoryBot.create(:second_task)
-    FactoryBot.create(:third_task)
+  @user1 = FactoryBot.create(:user1)
+  @user2 = FactoryBot.create(:user2)
+  @admin_user = FactoryBot.create(:admin_user)
+
+  FactoryBot.create(:task, user: @user1)
+  FactoryBot.create(:second_task, user: @user2)
+  FactoryBot.create(:third_task, user: @admin_user)
   end
+
   describe 'タスク登録画面' do
+    #タスク登録前にログインする
+    before do
+      visit new_session_path
+      fill_in 'Email', with: 'sample1@example.com'
+      fill_in 'Password', with: '00000000'
+      click_button 'ログイン'
+    end
     context '必要項目を入力して、createボタンを押した場合' do
       it 'データが保存される' do
         visit new_task_path
@@ -26,10 +38,15 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
   end
   describe 'タスク一覧画面' do
+    before do
+      visit new_session_path
+      fill_in 'Email', with: 'sample1@example.com'
+      fill_in 'Password', with: '00000000'
+      click_button 'ログイン'
+    end
     context 'タスクを作成した場合' do
       # テストコードを it '~' do end ブロックの中に記載する
       it '作成済みのタスクが表示される' do
-        task = FactoryBot.create(:task)
         visit tasks_path
         expect(page).to have_content 'デフォルトタイトルone'
       end
@@ -46,7 +63,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'タスク検索をした場合' do
       it "タイトルで検索できる" do
         visit tasks_path
-        @task = FactoryBot.create(:task, task_name: 'タスクあいまい検索')
+        @task = FactoryBot.create(:task, task_name: 'タスクあいまい検索', user: @user1)
         fill_in 'task_name_search', with: 'タスク'
         click_button 'タスク検索'
         expect(@task.task_name).to have_content 'タスクあいまい検索'
@@ -56,7 +73,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'ステータス検索をした場合' do
       it "ステータスで検索できる" do
         visit tasks_path
-        @task = FactoryBot.create(:task, status: '未着手')
+        @task = FactoryBot.create(:task, status: '未着手', user: @user2)
         select '未着手', from: 'status_search'
         click_button 'ステータス検索'
         expect(@task.status).to have_content '未着手'
@@ -65,9 +82,9 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'タイトルとステータスのAND検索をした場合' do
       it "タイトルとステータスでAND検索できる" do
         visit tasks_path
-        @task = FactoryBot.create(:task, task_name: 'タスク1', status: '未着手')
-        @task = FactoryBot.create(:second_task, task_name: 'task2', status: '着手中')
-        @task = FactoryBot.create(:third_task, task_name: 'タスク3', status: '着手中')
+        @task = FactoryBot.create(:task, task_name: 'タスク1', status: '未着手', user: @user1)
+        @task = FactoryBot.create(:second_task, task_name: 'task2', status: '着手中', user: @user2)
+        @task = FactoryBot.create(:third_task, task_name: 'タスク3', status: '着手中', user: @admin_user)
         fill_in 'task_name_search', with: 'タスク'
         select '着手中', from: 'status_search'
         click_button 'ステータス検索'
@@ -78,7 +95,6 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '終了期限が早い順でソートを選び、その順番に並んでいる' do
         visit tasks_path
         select '終了期限が早い順', from: 'time_limit_select'
-        #日付で順番を確かめるのは、変わってしまうので難しい。よって、ここではタスクネームで判定する
         @tasks = Task.order(time_limit: :ASC).pluck(:task_name)
         expect(@tasks[0]).to have_content 'デフォルトタイトルone'
         expect(@tasks[1]).to have_content 'デフォルトタイトルtwo'
@@ -115,13 +131,18 @@ RSpec.describe 'タスク管理機能', type: :system do
 
   describe 'タスク詳細画面' do
     context '任意のタスク詳細画面に遷移した場合' do
+      before do
+        visit new_session_path
+        fill_in 'Email', with: 'sample1@example.com'
+        fill_in 'Password', with: '00000000'
+        click_button 'ログイン'
+      end
       it '該当タスクの内容が表示されたページに遷移する' do
-        @task = FactoryBot.create(:task, task_name: 'show', content: 'show_content')
+        @task = FactoryBot.create(:task, task_name: 'show', content: 'show_content', user: @user1)
         visit task_path(@task.id)
         expect(page).to have_content 'show'
         expect(page).to have_content 'show_content'
       end
     end
   end
-
 end

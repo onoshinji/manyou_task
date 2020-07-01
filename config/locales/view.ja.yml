@@ -13,6 +13,8 @@ ja:
     destroy: 削除
     New Task: タスク登録
     Editing Task: タスク編集
+    emai: メールアドレス
+    password: パスワード
   link:
     new: 新規タスク
     show: 詳細

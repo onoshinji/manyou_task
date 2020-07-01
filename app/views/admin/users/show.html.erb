@@ -1,0 +1,36 @@
+<p id="notice"></p>
+<h3><%= @user.name %>さん</h3>
+<h3>メールアドレス: <%= @user.email %></h3>
+<table>
+  <thead>
+    <tr>
+      <th id="th_color"><%= t('view.Task name') %></th>
+      <th id="th_color"><%= t('view.Content') %></th>
+      <th id="th_color"><%= t('view.Time limit') %></th>
+      <th id="th_color"><%= t('view.Priority') %></th>
+      <th id="th_color"><%= t('view.Status') %></th>
+      <th id="th_color"><%= t('view.Created_at') %></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= @user.tasks.each do |task| %>
+    <tr>
+      <td id="task_color"><%= task.task_name%></td>
+      <td id="content_color"><%= task.content%></td>
+      <td id="time_limit_color"><%= task.time_limit%></td>
+      <td id="priority_color"><%= task.priority %></td>
+      <td id="status_color"><%= task.status %></td>
+      <td><%= task.created_at.to_s(:datetime_jp)%></td>
+      <td>  <button type="button" class = "btn btn-priority"><%= link_to '詳細を確認する', task_path(task.id) %></td>
+        <td>  <button type="button" class = "btn btn-priority"><%= link_to "投稿を編集する", edit_task_path(task.id) %></td>
+          <td>  <button type="button" class = "btn btn-priority"><%= link_to '投稿を削除する', task_path(task.id), method: :delete %></td>
+            <td>  <button type="button" class = "btn btn-priority"><%= link_to '新しく投稿する', new_task_path %> <td>
+              <td>  <button type="button" class = "btn btn-priority"><%= link_to 'みんなの投稿', tasks_path %> </td>
+                <% end %>
+              </tbody>
+            </table>
+            <div id ="footer_top">
+              <%= link_to "投稿一覧画面にもどる", tasks_path %>
+              <%# <%= link_to "ユーザー情報を編集する", edit_user_path(@user.id) %>
+            </div>

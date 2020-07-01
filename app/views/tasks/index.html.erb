@@ -1,15 +1,14 @@
 <p id="notice"><%= notice %></p>
-
 <h1><%= t('view.Tasks') %></h1>
 <%# タイトルあいまい検索 %>
 <button type="button" class = "btn btn-default">
 <%= link_to t('link.new'), new_task_path %>
   </button>
+
 <%= form_with url: tasks_path, method: :get, local: true do |form| %>
   <%= form.text_field :task_name_search %>
   <%= form.submit 'タスク検索', name: nil %>
 <%# ステータス検索 %>
-
   <%= form.select :status_search, {'指定しない': -1, '未着手': 0, '着手中': 1, '完了': 2, },
                                   { include_blank: '', selected: -1},
                                   { class: 'status_select' , required: true } %>
@@ -39,21 +38,20 @@
       <th colspan="3"></th>
     </tr>
   </thead>
-
   <tbody>
-    <% @tasks.each do |task| %>
-      <tr>
-        <td id="task_color"><%= task.task_name%></td>
-        <td id="content_color"><%= task.content%></td>
-        <td id="time_limit_color"><%= task.time_limit%></td>
-        <td id="priority_color"><%= task.priority %></td>
-        <td id="status_color"><%= task.status %></td>
-        <td><%= task.created_at.to_s(:datetime_jp)%></td>
-        <td><button type="button" class = "btn btn-priority"><%= link_to '詳細', task %></button></td>
-        <td><button type="button" class = "btn btn-priority"><%= link_to '編集', edit_task_path(task) %></button></td>
-        <td><button type="button" class = "btn btn-priority"><%= link_to '削除', task, method: :delete, data: { confirm: 'Are you sure?' } %></button></td>
-      </tr>
-    <% end %>
+  <%= @tasks.each do |task| %>
+    <tr>
+    <td id="task_color"><%= task.task_name%></td>
+    <td id="content_color"><%= task.content%></td>
+    <td id="time_limit_color"><%= task.time_limit%></td>
+    <td id="priority_color"><%= task.priority %></td>
+    <td id="status_color"><%= task.status %></td>
+    <td><%= task.created_at.to_s(:datetime_jp)%></td>
+    <td><button type="button" class = "btn btn-priority"><%= link_to '詳細', task %></button></td>
+    <td><button type="button" class = "btn btn-priority"><%= link_to '編集', edit_task_path(task) %></button></td>
+    <td><button type="button" class = "btn btn-priority"><%= link_to '削除', task, method: :delete, data: { confirm: '削除していいですか?' } %></button></td>
+    </tr>
+  <% end %>
   </tbody>
 </table>
   <%= paginate @paginatable_array %>

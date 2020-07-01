@@ -45,28 +45,28 @@ labelings テーブル
 | label_id| bigint |
 
 ## 自動化を含めたherokuへのデプロイ手順
-1.アセットプリコンパイルをしてファイルを連結。本番環境で動作するようにする
+1. アセットプリコンパイルをしてファイルを連結。本番環境で動作するようにする
   $ rails assets:precompile RAILS_ENV=production
-2.herokuへログイン
+2. herokuへログイン
   $ heroku login
-3.コミットする
+3. コミットする
   $ git add .
   $ git commit -m"herokuへデプロイする"
-4.herokuにアプリケーションを作成する。（アプリを入れる空の入れ物を作っている）
+4. herokuにアプリケーションを作成する。（アプリを入れる空の入れ物を作っている）
   $ heroku create
-5.heroku buildpackを追加する。しなくても動くかもしれない。やっておくのが無難
+5. heroku buildpackを追加する。しなくても動くかもしれない。やっておくのが無難
   $ heroku buildpacks:set heroku/ruby
   $ heroku buildpacks:add --index 1 heroku/nodejs
-6.herokuへデプロイする
+6. herokuへデプロイする
   ①masterブランチの場合
     $ git push heroku master
   ②masterブランチ以外からherokuへ送る場合
     $ git push heroku step2:master
-7.データベースを移行し、動くようにする
+7. データベースを移行し、動くようにする
   $ heroku run rails db:migrate
-8.herokuへアクセス
+8. herokuへアクセス
   $ heroku open
-9.Githubと連携する
+9. Githubと連携する
   ①herokuのダッシュボードにアクセスする
   ②githubと連携するアプリを選択する
   ③Deployタブを選択する

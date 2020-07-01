@@ -1,0 +1,15 @@
+<p id ="notice"><%= notice %></p>
+<%= @users.each do |user| %>
+<table>
+  <thead>
+    <tr>
+      <th><%= user.name %></th>
+      <th>タスクの数<%= user.tasks.count %></th>
+    </tr>
+  </thead>
+  <tr>
+    <td><button type="button" class = "btn btn-priority"><%= link_to '詳細',user %></button></td>
+  </tr>
+  </table>
+
+<% end %>

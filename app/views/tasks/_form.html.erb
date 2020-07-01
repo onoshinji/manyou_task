@@ -2,7 +2,6 @@
   <% if task.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(task.errors.count, "件のエラーが発生しました") %></h2>
-
       <ul>
       <% task.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -10,32 +9,18 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
     <%= form.label :task_name %>
     <%= form.text_field :task_name %>
-  </div>
-
-  <div class="field">
     <%= form.label :content %>
     <%= form.text_field :content %>
-  </div>
-
-  <div class="field">
     <%= form.label :time_limit %>
     <%= form.date_select :time_limit %>
-  </div>
-
-  <div class="field">
     <%= form.label :priority %>
     <%= form.select :priority, Task.priorities.keys, include_blank: true %>
-  </div>
-
-  <div class="field">
     <%= form.label :status %>
     <%= form.select :status, Task.statuses.keys, include_blank: true %>
   </div>
-
   <div class="actions">
     <%= form.submit %>
   </div>
