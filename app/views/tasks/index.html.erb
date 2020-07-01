@@ -39,7 +39,7 @@
     </tr>
   </thead>
   <tbody>
-  <%= @tasks.each do |task| %>
+  <% @tasks.each do |task| %>
     <tr>
     <td id="task_color"><%= task.task_name%></td>
     <td id="content_color"><%= task.content%></td>
