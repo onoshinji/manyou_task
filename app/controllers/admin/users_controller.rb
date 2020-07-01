@@ -46,7 +46,7 @@ class Admin::UsersController < ApplicationController
                                :password_confirmation, :admin)
   end
   def admin_user?
-    unless current_user.admin?
+    unless current_user.admin == "管理者"
       redirect_to root_path, notice: "あなたは管理者ではありません"
     end
   end

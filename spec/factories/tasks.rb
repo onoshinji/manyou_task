@@ -8,7 +8,7 @@ FactoryBot.define do
     time_limit { Date.tomorrow }
     priority { '低' }
     status { '未着手' }
-    user
+    association :user1
   end
   # 作成するテストデータの名前を「second_task」とします
   # （存在しないクラス名の名前をつける場合、オプションで「このクラスのテストデータにしてください」と指定します）
@@ -18,7 +18,7 @@ FactoryBot.define do
     time_limit { Date.today.next_month }
     priority { '中' }
     status { '着手中' }
-    user
+    association :user2
   end
 
   factory :third_task, class: Task do
@@ -27,6 +27,6 @@ FactoryBot.define do
     time_limit { Date.today.next_year }
     priority { '高' }
     status { '完了' }
-    user
+    association :admin_user
   end
 end

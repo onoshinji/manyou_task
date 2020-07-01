@@ -9,11 +9,19 @@ RSpec.describe 'タスク管理機能', type: :system do
   FactoryBot.create(:user1)
   FactoryBot.create(:user2)
   FactoryBot.create(:admin_user)
-    FactoryBot.create(:task)
-    FactoryBot.create(:second_task)
-    FactoryBot.create(:third_task)
+
+    FactoryBot.create(:task, user_id: user1)
+    FactoryBot.create(:second_task, user: user2)
+    FactoryBot.create(:third_task, user: admin_user)
   end
   describe 'タスク登録画面' do
+    #タスク登録前にログインする
+    before do
+      visit new_session_path
+      fill_in 'Email', with: 'sample1@example.com'
+      fill_in 'Password', with: '00000000'
+      click_button 'ログイン'
+    end
     context '必要項目を入力して、createボタンを押した場合' do
       it 'データが保存される' do
         visit new_task_path
@@ -33,7 +41,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'タスクを作成した場合' do
       # テストコードを it '~' do end ブロックの中に記載する
       it '作成済みのタスクが表示される' do
-        task = FactoryBot.create(:task)
+        task = FactoryBot.create(:task, user: user1)
         visit tasks_path
         expect(page).to have_content 'デフォルトタイトルone'
       end

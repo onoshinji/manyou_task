@@ -49,6 +49,10 @@ RSpec.describe 'ユーザー管理機能', type: :system do
         visit user_path(id: 10001)
         expect(current_path).to eq tasks_path
       end
+      it '管理者のページは見れないこと' do
+        visit admin_users_path
+        expect(page).to have_content 'あなたは管理者ではありません' 
+      end
       it 'ログアウトできること' do
         visit user_path(id: 10000)
         click_on 'Logout'
