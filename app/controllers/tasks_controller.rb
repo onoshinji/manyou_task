@@ -6,7 +6,7 @@ class TasksController < ApplicationController
   def index
     # current_userメソッドで、@current_userにログインしているユーザーのデータを渡している
     current_user
-    @paginatable_array = Kaminari.paginate_array(@current_user.tasks).page(params[:page]).per(3)
+    # @paginatable_array = Kaminari.paginate_array(@current_user.tasks).page(params[:page]).per(3)
     #終了期限でソートするif文
     if params[:sort_time_limit].present?
       if params[:sort_time_limit] == 'hurry'
