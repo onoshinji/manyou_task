@@ -13,6 +13,9 @@
                                   { include_blank: '', selected: -1},
                                   { class: 'status_select' , required: true } %>
   <%= form.submit 'ステータス検索', name: nil %>
+  <br>
+  <%= form.select("label_id", Label.pluck(:label_name, :id), { include_blank: true }) %>
+  <%= form.submit 'ラベル検索', name: nil %>
 <% end %>
 <%# ソートのフォームウィズ %>
 <%= form_with model: @task, url: tasks_path, method: :get, local: true do |form| %>

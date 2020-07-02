@@ -23,12 +23,14 @@ RSpec.describe 'タスク管理機能', type: :system do
       click_button 'ログイン'
     end
     context '必要項目を入力して、createボタンを押した場合' do
-      it 'データが保存される' do
+      it 'ラベルを含むタスクデータが保存される' do
         visit new_task_path
         fill_in 'タスク', with: 'yjsn'
         fill_in '内容', with: 'con'
         select '低', from: '優先順位'
         select '未着手', from: 'ステータス'
+        byebug
+        check 'チーム'
         click_button '登録する'
         expect(page).to have_content 'yjsn'
         expect(page).to have_content 'con'

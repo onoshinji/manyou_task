@@ -12,6 +12,7 @@ class Task < ApplicationRecord
   enum priority: { 低: 0, 中: 1, 高: 2 }
   enum status: { 未着手: 0, 着手中: 1, 完了: 2 }
   #labelingsが中間テーブル
+  # accepts_nested_attributes_for :labels, allow_destroy: true
   has_many :labelings, dependent: :destroy
   has_many :labels, through: :labelings
   belongs_to :user

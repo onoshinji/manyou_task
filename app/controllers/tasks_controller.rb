@@ -25,6 +25,7 @@ class TasksController < ApplicationController
         @tasks = @current_user.tasks.order(priority: :ASC)
       end
     end
+    # 検索の条件文
     if params[:task_name_search].present? && params[:status_search].to_i >= 0
       @tasks = Task.task_search(params[:task_name_search]).status_search(params[:status_search])
     elsif params[:task_name_search].present?
@@ -32,6 +33,8 @@ class TasksController < ApplicationController
     elsif params[:status_search].present?
       @tasks = Task.status_search(params[:status_search])
     end
+    # ラベル検索の条件文
+    @tasks = @current_user.tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
   end
 
   def show
