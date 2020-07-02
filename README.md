@@ -17,6 +17,9 @@ usersテーブル
 | ----   | ------ |
 |  id    | integer|
 |  name  | string |
+|  email  | string |
+|  password_digest  | string |
+|  admin  | boolean |
 
 tasksテーブル
 
@@ -26,7 +29,8 @@ tasksテーブル
 |  task_name  | string |
 | content | text |
 | time_limit | date |
-| priority | string |
+| priority | integer |
+|  status  | integer |
 | user_id | bigint |
 
 labels テーブル
@@ -34,7 +38,7 @@ labels テーブル
 | カラム   | データ型 |
 | ----   | ------ |
 |  id    | integer|
-| status | string |
+| label_name | string |
 
 labelings テーブル
 
