@@ -34,6 +34,7 @@
       <th id="th_color"><%= t('view.Time limit') %></th>
       <th id="th_color"><%= t('view.Priority') %></th>
       <th id="th_color"><%= t('view.Status') %></th>
+      <th id="th_color"><%= t('view.label') %></th>
       <th id="th_color"><%= t('view.Created_at') %></th>
       <th colspan="3"></th>
     </tr>
@@ -46,6 +47,11 @@
     <td id="time_limit_color"><%= task.time_limit%></td>
     <td id="priority_color"><%= task.priority %></td>
     <td id="status_color"><%= task.status %></td>
+    <td id="label_color">
+      <% task.labels.each do |label| %>
+      <%= label.label_name %>
+      <% end %>
+    </td>
     <td><%= task.created_at.to_s(:datetime_jp)%></td>
     <td><button type="button" class = "btn btn-priority"><%= link_to '詳細', task %></button></td>
     <td><button type="button" class = "btn btn-priority"><%= link_to '編集', edit_task_path(task) %></button></td>

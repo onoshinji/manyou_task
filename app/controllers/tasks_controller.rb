@@ -74,9 +74,9 @@ class TasksController < ApplicationController
   def set_task
     @task = Task.find(params[:id])
   end
-
+#ラベルデータをここで許可する
   def task_params
-    params.require(:task).permit(:task_name, :time_limit, :priority, :content, :status)
+    params.require(:task).permit(:task_name, :time_limit, :priority, :content, :status, { label_ids: [] })
   end
   # 認証済みユーザーかどうか判断するメソッド
   def authenticate_user

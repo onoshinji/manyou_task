@@ -3,3 +3,7 @@ User.create!(name:  "管理者",
              password:  "11111111",
              password_confirmation: "11111111",
              admin: true)
+
+Label.create!(label_name: "チーム")
+Label.create!(label_name: "help")
+Label.create!(label_name: "難易度")
