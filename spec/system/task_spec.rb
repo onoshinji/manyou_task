@@ -8,8 +8,7 @@ RSpec.describe 'タスク管理機能', type: :system do
   @user1 = FactoryBot.create(:user1)
   @user2 = FactoryBot.create(:user2)
   @admin_user = FactoryBot.create(:admin_user)
-
-  FactoryBot.create(:task, user: @user1)
+  @label_task = FactoryBot.create(:task, user: @user1)
   FactoryBot.create(:second_task, user: @user2)
   FactoryBot.create(:third_task, user: @admin_user)
   end
@@ -21,6 +20,8 @@ RSpec.describe 'タスク管理機能', type: :system do
       fill_in 'Email', with: 'sample1@example.com'
       fill_in 'Password', with: '00000000'
       click_button 'ログイン'
+      label1 = Label.create(label_name: :チーム)
+      label2 = Label.create(label_name: :help)
     end
     context '必要項目を入力して、createボタンを押した場合' do
       it 'ラベルを含むタスクデータが保存される' do
@@ -29,13 +30,23 @@ RSpec.describe 'タスク管理機能', type: :system do
         fill_in '内容', with: 'con'
         select '低', from: '優先順位'
         select '未着手', from: 'ステータス'
-        byebug
         check 'チーム'
         click_button '登録する'
         expect(page).to have_content 'yjsn'
         expect(page).to have_content 'con'
         expect(page).to have_content '低'
         expect(page).to have_content '未着手'
+        expect(page).to have_content 'チーム'
+      end
+      it 'タスク検索ができる' do
+          visit new_task_path
+          fill_in 'タスク', with: 'yjsn'
+          fill_in '内容', with: 'con'
+          select '低', from: '優先順位'
+          select '未着手', from: 'ステータス'
+          check 'help'
+          click_button '登録する'
+          expect(page).to have_content 'help'
       end
     end
   end

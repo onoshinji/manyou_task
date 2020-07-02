@@ -23,15 +23,13 @@
       <td id="priority_color"><%= task.priority %></td>
       <td id="status_color"><%= task.status %></td>
       <td><%= task.created_at.to_s(:datetime_jp)%></td>
-      <td>  <button type="button" class = "btn btn-priority"><%= link_to '詳細を確認する', task_path(task.id) %></td>
-        <td>  <button type="button" class = "btn btn-priority"><%= link_to "投稿を編集する", edit_task_path(task.id) %></td>
-          <td>  <button type="button" class = "btn btn-priority"><%= link_to '投稿を削除する', task_path(task.id), method: :delete %></td>
-            <td>  <button type="button" class = "btn btn-priority"><%= link_to '新しく投稿する', new_task_path %> <td>
-              <td>  <button type="button" class = "btn btn-priority"><%= link_to 'みんなの投稿', tasks_path %> </td>
-                <% end %>
-              </tbody>
-            </table>
-            <div id ="footer_top">
-              <%= link_to "投稿一覧画面にもどる", tasks_path %>
-              <%# <%= link_to "ユーザー情報を編集する", edit_user_path(@user.id) %>
-            </div>
+      <td>  <button type="button" class = "btn btn-priority"><%= link_to "投稿を編集する", edit_task_path(task.id) %></td>
+        <td>  <button type="button" class = "btn btn-priority"><%= link_to '投稿を削除する', task_path(task.id), method: :delete %></td>
+          <td>  <button type="button" class = "btn btn-priority"><%= link_to '新しく投稿する', new_task_path %> <td>
+            <% end %>
+          </tbody>
+        </table>
+        <div id ="footer_top">
+          <%= link_to "投稿一覧画面にもどる", tasks_path %>
+          <%# <%= link_to "ユーザー情報を編集する", edit_user_path(@user.id) %>
+        </div>

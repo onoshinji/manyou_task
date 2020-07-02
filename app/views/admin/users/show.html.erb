@@ -9,6 +9,7 @@
       <th id="th_color"><%= t('view.Time limit') %></th>
       <th id="th_color"><%= t('view.Priority') %></th>
       <th id="th_color"><%= t('view.Status') %></th>
+      <th id="th_color"><%= t('view.label') %></th>
       <th id="th_color"><%= t('view.Created_at') %></th>
       <th colspan="3"></th>
     </tr>
@@ -21,12 +22,15 @@
       <td id="time_limit_color"><%= task.time_limit%></td>
       <td id="priority_color"><%= task.priority %></td>
       <td id="status_color"><%= task.status %></td>
+      <td id="label_color">
+        <% task.labels.each do |label| %>
+        <%= label.label_name %>
+        <% end %>
+      </td>
       <td><%= task.created_at.to_s(:datetime_jp)%></td>
       <td>  <button type="button" class = "btn btn-priority"><%= link_to '詳細を確認する', task_path(task.id) %></td>
         <td>  <button type="button" class = "btn btn-priority"><%= link_to "投稿を編集する", edit_task_path(task.id) %></td>
           <td>  <button type="button" class = "btn btn-priority"><%= link_to '投稿を削除する', task_path(task.id), method: :delete %></td>
-            <td>  <button type="button" class = "btn btn-priority"><%= link_to '新しく投稿する', new_task_path %> <td>
-              <td>  <button type="button" class = "btn btn-priority"><%= link_to 'みんなの投稿', tasks_path %> </td>
                 <% end %>
               </tbody>
             </table>
