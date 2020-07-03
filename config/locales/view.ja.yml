@@ -15,6 +15,7 @@ ja:
     Editing Task: タスク編集
     emai: メールアドレス
     password: パスワード
+    label: ラベル
   link:
     new: 新規タスク
     show: 詳細

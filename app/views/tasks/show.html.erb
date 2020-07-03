@@ -20,6 +20,12 @@
   <strong><%= t('view.Status') %>:</strong>
   <%= @task.status %>
 </p>
+<p id = "show_text">
+  <strong><%= t('view.label') %>:</strong>
+  <% @task.labels.each do |label| %>
+  <%= label.label_name %>
+  <% end %>
+</p>
 
 <button type="button" class = "btn btn-priority"><%= link_to t('link.edit'), edit_task_path(@task) %></button>
 <button type="button" class = "btn btn-priority"><%= link_to t('link.back'), tasks_path %></button>

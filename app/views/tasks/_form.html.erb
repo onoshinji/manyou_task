@@ -20,6 +20,7 @@
     <%= form.select :priority, Task.priorities.keys, include_blank: true %>
     <%= form.label :status %>
     <%= form.select :status, Task.statuses.keys, include_blank: true %>
+    <%= form.collection_check_boxes(:label_ids, Label.all, :id, :label_name) %>
   </div>
   <div class="actions">
     <%= form.submit %>

@@ -6,7 +6,7 @@ class TasksController < ApplicationController
   def index
     # current_userメソッドで、@current_userにログインしているユーザーのデータを渡している
     current_user
-    @paginatable_array = Kaminari.paginate_array(@tasks).page(params[:page]).per(8)
+    # @paginatable_array = Kaminari.paginate_array(@current_user.tasks).page(params[:page]).per(3)
     #終了期限でソートするif文
     if params[:sort_time_limit].present?
       if params[:sort_time_limit] == 'hurry'
@@ -25,6 +25,7 @@ class TasksController < ApplicationController
         @tasks = @current_user.tasks.order(priority: :ASC)
       end
     end
+    # 検索の条件文
     if params[:task_name_search].present? && params[:status_search].to_i >= 0
       @tasks = Task.task_search(params[:task_name_search]).status_search(params[:status_search])
     elsif params[:task_name_search].present?
@@ -32,6 +33,8 @@ class TasksController < ApplicationController
     elsif params[:status_search].present?
       @tasks = Task.status_search(params[:status_search])
     end
+    # ラベル検索の条件文
+    @tasks = @current_user.tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
   end
 
   def show
@@ -74,9 +77,9 @@ class TasksController < ApplicationController
   def set_task
     @task = Task.find(params[:id])
   end
-
+#ラベルデータをここで許可する
   def task_params
-    params.require(:task).permit(:task_name, :time_limit, :priority, :content, :status)
+    params.require(:task).permit(:task_name, :time_limit, :priority, :content, :status, { label_ids: [] })
   end
   # 認証済みユーザーかどうか判断するメソッド
   def authenticate_user
